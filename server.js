@@ -25,12 +25,14 @@ const args = require('minimist')(process.argv.slice(2));
 
 const port = args.port || process.env.PORT || 3000;
 
+var htmlOutput;
 fs.readFile('./public/index.html', 'utf8', (err, data) => {
     if (err) {
         console.log(err);
         return;
     }
     console.log(data);
+    htmlOutput = data;
 });
 
 // Define a const `server` as an arrow function using http.createServer. 
@@ -43,7 +45,7 @@ fs.readFile('./public/index.html', 'utf8', (err, data) => {
 const server = http.createServer((req, res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html');
-    res.end(data);
+    res.end(htmlOutput);
 })
 
 // Start the `server` const listening on the port defined by argument in your `port` const. 
